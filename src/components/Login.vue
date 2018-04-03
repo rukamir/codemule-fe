@@ -1,12 +1,8 @@
 <template>
   <div>
     <h2>Login froms</h2>
-    <el-form ref="form" :model="form" label-width="120px">
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">Sign In</el-button>
-        <el-button @click="signOut">Sign Out</el-button>
-      </el-form-item>
-    </el-form>
+    <el-button v-if=!this.loggedIn type="primary" @click="onSubmit">Sign In</el-button>
+    <el-button v-else @click="signOut">Sign Out</el-button>
   </div>
 </template>
 
@@ -31,7 +27,8 @@ var authData = {
 
 export default {
     name: 'Login',
-    props: ['getAuth'],
+    props: ['getAuth',
+            'loggedIn'],
     data() {
       // debugger;
       var auth = new CognitoAuth(authData);

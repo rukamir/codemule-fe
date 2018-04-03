@@ -2,7 +2,7 @@
   <div id="app">
     <img src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <Login :getAuth="getAuth"></Login>
+    <Login :getAuth="getAuth" v-bind:loggedIn=isLoggedIn></Login>
   </div>
 </template>
 
@@ -28,6 +28,11 @@ export default {
     getAuth(token) {
       this.jwt = token;
     },
+  },
+  computed: {
+    isLoggedIn() {
+      return this.jwt != '';
+    }
   },
 };
 </script>
