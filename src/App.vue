@@ -2,7 +2,7 @@
   <div id="app">
     <img src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <Login :getAuth="getAuth" v-bind:loggedIn=isLoggedIn></Login>
+    <Login :getAuth=getAuth v-bind:loggedIn=isLoggedIn></Login>
   </div>
 </template>
 
