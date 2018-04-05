@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Nav></Nav>
     <img src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <Login :getAuth=getAuth v-bind:loggedIn=isLoggedIn></Login>
@@ -9,6 +10,7 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue';
 import Login from './components/Login';
+import Nav from './components/Nav';
 
 const ENDPOINT = process.env.VUE_APP_ENDPOINT;
 
@@ -17,6 +19,7 @@ export default {
   components: {
     HelloWorld,
     Login,
+    Nav,
   },
   data() {
     return {

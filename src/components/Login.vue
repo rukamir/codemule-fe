@@ -1,8 +1,8 @@
 <template>
   <div>
     <h2>Login froms</h2>
-    <el-button type="primary" @click="onSubmit">Sign In</el-button>
-    <el-button @click="signOut">Sign Out</el-button>
+    <el-button v-if=!this.loggedIn type="primary" @click="onSubmit">Sign In</el-button>
+    <el-button v-else @click="signOut">Sign Out</el-button>
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
       auth.userhandler = {
         onSuccess: (result) => {
           console.log(result);
-          this.getAuth(result.idToken.jwtToken)
+          this.getAuth(result.idToken.jwtToken);
         },
         onFailure: function(err) {
           alert("Error!");
@@ -58,7 +58,6 @@ export default {
     mounted: function(){
       var curUrl = window.location.href;
       this.auth.parseCognitoWebResponse(curUrl);
-      console.log('tried to get response');
     },
 };
 </script>
