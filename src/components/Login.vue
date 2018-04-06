@@ -31,6 +31,7 @@ export default {
             'loggedIn'],
     data() {
       // debugger;
+      console.log("at data about to make auth");
       var auth = new CognitoAuth(authData);
       auth.userhandler = {
         onSuccess: (result) => {
