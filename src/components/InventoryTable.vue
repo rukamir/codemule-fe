@@ -1,74 +1,98 @@
 <template>
-  <el-table
+  <div>
+    <el-table
     :data="tableData"
-    style="width: 100%">
+    offset="2"
+    @row-click=showSendOtions>
     <el-table-column
-      prop="date"
-      label="Date"
       sortable
-      width="180"
-      :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"
-      :filter-method="filterHandler"
+      prop="title"
+      label="Title">
+    </el-table-column>
+    <el-table-column
+      prop="count"
+      label="Count"
+      width="100"
     >
     </el-table-column>
     <el-table-column
-      prop="name"
-      label="Name"
-      width="180">
+      class="hidden-lg-and-down"
+      type="hidden-lg-and-down"
+      hidden-lg-and-down
+      prop="added"
+      label="Added"
+      sortable
+      width="180"
+    >
     </el-table-column>
     <el-table-column
-      prop="address"
-      label="Address"
-      :formatter="formatter">
-    </el-table-column>
-    <el-table-column
-      prop="tag"
-      label="Tag"
-      width="100"
-      :filters="[{ text: 'Home', value: 'Home' }, { text: 'Office', value: 'Office' }]"
-      :filter-method="filterTag"
-      filter-placement="bottom-end">
-      <template slot-scope="scope">
-        <el-tag
-          :type="scope.row.tag === 'Home' ? 'primary' : 'success'"
-          close-transition>{{scope.row.tag}}</el-tag>
-      </template>
+      prop="send"
+      label="Send"
+      :formatter="formatter"
+      width="150">
     </el-table-column>
   </el-table>
+  </div>
 </template>
 
 <script>
+import 'element-ui/lib/theme-chalk/display.css';
+import { MessageBox } from 'element-ui';
+
   export default {
     name: 'InventoryTable',
-    props: [],
+    props: ['getSelectedItem'],
     data() {
       return {
+        selectedItem: '',
         tableData: [{
-          date: '2016-05-03',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
+          id: 1,
+          added: '2016-05-03',
+          title: 'Tom',
+          address: 'Tank Engine Plt9 3/4',
+          count: 9,
           tag: 'Home'
         }, {
-          date: '2016-05-02',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
+          id: 2,
+          added: '2016-05-02',
+          title: 'Alice',
+          address: '109 Wonderland Ave',
+          count: 1,
           tag: 'Office'
         }, {
-          date: '2016-05-04',
-          name: 'Tom',
+          id: 3,
+          added: '2016-05-04',
+          title: 'Tom',
           address: 'No. 189, Grove St, Los Angeles',
+          count: 4,
           tag: 'Home'
         }, {
-          date: '2016-05-01',
-          name: 'Tom',
+          id: 4,
+          added: '2016-05-01',
+          title: 'Peter',
           address: 'No. 189, Grove St, Los Angeles',
+          count: 14,
           tag: 'Office'
-        }]
+        }],
       }
     },
     methods: {
+      // openSendPrompt() {
+      //   const h = this.$createElement;
+      //   this.$msgbox({
+      //     title: "Send",
+      //     message: "he;;p",
+      //     showCancelButton: true,
+      //     confirmButtonText: 'OK',
+      //     cancelButtonText: 'Cancel',
+      //   }).then(console.log);
+      // },
+      showSendOtions(item) {
+        this.selectedItem = item;
+        this.getSelectedItem(item);
+      },
       formatter(row, column) {
-        return row.address;
+        return <i class="el-icon-message"></i>
       },
       filterTag(value, row) {
         return row.tag === value;

@@ -3,7 +3,7 @@
     <Nav></Nav>
     <img src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <Inv></Inv>
+    <Inv :getSelectedItem=getSelectedItem></Inv>
     <Login :getAuth=getAuth v-bind:loggedIn=isLoggedIn></Login>
   </div>
 </template>
@@ -34,6 +34,9 @@ export default {
     getAuth(token) {
       this.jwt = token;
     },
+    getSelectedItem(item) {
+      console.log(item);
+    }
   },
   computed: {
     isLoggedIn() {
