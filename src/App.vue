@@ -3,6 +3,7 @@
     <Nav></Nav>
     <img src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Inv></Inv>
     <Login :getAuth=getAuth v-bind:loggedIn=isLoggedIn></Login>
   </div>
 </template>
@@ -11,6 +12,7 @@
 import HelloWorld from './components/HelloWorld.vue';
 import Login from './components/Login';
 import Nav from './components/Nav';
+import Inv from './components/InventoryTable';
 
 const ENDPOINT = process.env.VUE_APP_ENDPOINT;
 
@@ -20,6 +22,7 @@ export default {
     HelloWorld,
     Login,
     Nav,
+    Inv,
   },
   data() {
     return {

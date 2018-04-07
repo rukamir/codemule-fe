@@ -17,14 +17,18 @@
             <span slot="title">Mailing Lists</span>
         </el-menu-item>
         <el-menu-item @click="setNavBar(4)" index="4">
+            <i class="el-icon-goods"></i>
+            <span slot="title">Inventory</span>
+        </el-menu-item>
+        <el-menu-item @click="setNavBar(5)" index="5">
             <i class="el-icon-setting"></i>
             <span slot="title">Settings</span>
         </el-menu-item>
-        <el-menu-item @click="setNavBar(5)" index="5">
+        <el-menu-item @click="setNavBar(6)" index="6">
             <i class="el-icon-star-off"></i>
             <span slot="title">Plans</span>
         </el-menu-item>
-        <el-menu-item @click="setNavBar(6)" index="6">
+        <el-menu-item @click="setNavBar(7)" index="7">
             <i class="el-icon-info"></i>
             <span slot="title">Information</span>
         </el-menu-item>
