@@ -1,42 +1,47 @@
 <template>
   <div>
-    <el-table
-    :data="tableData"
-    offset="2"
-    @row-click=showSendOtions>
-    <el-table-column
-      sortable
-      prop="title"
-      label="Title">
-    </el-table-column>
-    <el-table-column
-      prop="count"
-      label="Count"
-      width="100"
-    >
-    </el-table-column>
-    <el-table-column
-      class="hidden-lg-and-down"
-      type="hidden-lg-and-down"
-      hidden-lg-and-down
-      prop="added"
-      label="Added"
-      sortable
-      width="180"
-    >
-    </el-table-column>
-    <el-table-column
-      prop="send"
-      label="Send"
-      :formatter="formatter"
-      width="150">
-    </el-table-column>
-  </el-table>
+    <el-row>
+      <el-col
+        :xs="{span:21, offset:3}"
+        :sm="{span:21, offset:3}" 
+        :md="{span:22, offset:2}">
+        <el-table
+        :data="tableData"
+        @row-click=showSendOtions>
+          <el-table-column
+            sortable
+            prop="title"
+            label="Title">
+          </el-table-column>
+          <el-table-column
+            prop="count"
+            label="Count"
+            width="100"
+          >
+          </el-table-column>
+          <el-table-column
+            v-if="getWindowWidth() > 1024"
+            prop="added"
+            label="Added"
+            sortable
+            width="180"
+          >
+          </el-table-column>
+          <el-table-column
+            v-if="getWindowWidth() > 900"
+            prop="send"
+            label="Send"
+            :formatter="formatter"
+            width="150">
+          </el-table-column>
+        </el-table>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import 'element-ui/lib/theme-chalk/display.css';
+// import 'element-ui/lib/theme-chalk/display.css';
 import { MessageBox } from 'element-ui';
 
   export default {
@@ -100,7 +105,10 @@ import { MessageBox } from 'element-ui';
       filterHandler(value, row, column) {
         const property = column['property'];
         return row[property] === value;
-      }
+      },
+      getWindowWidth() {
+        return window.innerWidth
+      },
     }
   }
 </script>

@@ -10,6 +10,7 @@
 import Login from './components/Login';
 import Nav from './components/Nav';
 import Send from './components/send/Send';
+import 'element-ui/lib/theme-chalk/display.css';
 
 const ENDPOINT = process.env.VUE_APP_ENDPOINT;
 
@@ -49,6 +50,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0px;
 }
 </style>

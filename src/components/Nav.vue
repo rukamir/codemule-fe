@@ -38,10 +38,15 @@
 </template>
 
 <style>
+  .el-menu-vertical-demo {
+    position: fixed;
+    z-index: 1;
+    height: 100%;
+    float: left;
+  }
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 175px;
     min-height: 400px;
-    float: left;
   }
 </style>
 
