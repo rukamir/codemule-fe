@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Nav></Nav>
-    <Send :getSelectedItem=getSelectedItem />
+    <Nav :getPage=getPage></Nav>
+    <Send v-if="this.activePage == 'send'" :getSelectedItem=getSelectedItem />
     <Login :getAuth=getAuth v-bind:loggedIn=isLoggedIn></Login>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
   data() {
     return {
       ENDPOINT,
+      activePage: 'send',
       jwt: '',
     };
   },
@@ -33,7 +34,20 @@ export default {
     },
     getSelectedItem(item) {
       console.log(item);
-    }
+    },
+    getPage(pageIndex) {
+      console.log(`page presssed ${pageIndex}`);
+      let pages = [
+        "upload",
+        "send",
+        "mailing",
+        "inventory",
+        "settings",
+        "plans",
+        "info"
+      ];
+      this.activePage = pages[pageIndex];
+    },
   },
   computed: {
     isLoggedIn() {
