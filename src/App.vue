@@ -2,6 +2,8 @@
   <div id="app">
     <Nav :getPage=getPage></Nav>
     <Send v-if="this.activePage == 'send'" :getSelectedItem=getSelectedItem />
+    <Inventory v-if="this.activePage == 'inventory'"/>
+
     <Login :getAuth=getAuth v-bind:loggedIn=isLoggedIn></Login>
   </div>
 </template>
@@ -10,6 +12,7 @@
 import Login from './components/Login';
 import Nav from './components/Nav';
 import Send from './components/send/Send';
+import Inventory from './components/inventory/Inventory';
 import 'element-ui/lib/theme-chalk/display.css';
 
 const ENDPOINT = process.env.VUE_APP_ENDPOINT;
@@ -20,6 +23,7 @@ export default {
     Login,
     Nav,
     Send,
+    Inventory
   },
   data() {
     return {

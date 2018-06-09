@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <el-row>
-      <el-col
-        :xs="{span:21, offset:3}"
-        :sm="{span:21, offset:3}" 
+  <div
+        :xs="{span:20, offset:4}"
+        :sm="{span:20, offset:4}" 
         :md="{span:22, offset:2}">
+    <el-row>
+      <el-col>
         <el-table
         :data="tableData"
         @row-click=showSendOtions>
@@ -16,16 +16,7 @@
           <el-table-column
             prop="count"
             label="Count"
-            width="100"
-          >
-          </el-table-column>
-          <el-table-column
-            v-if="getWindowWidth() > 1024"
-            prop="added"
-            label="Added"
-            sortable
-            width="180"
-          >
+            width="100">
           </el-table-column>
           <el-table-column
             v-if="getWindowWidth() > 900"
@@ -43,43 +34,37 @@
 <script>
 // import 'element-ui/lib/theme-chalk/display.css';
 import { MessageBox } from 'element-ui';
+import axios from 'axios';
+
+var instance = axios.create({
+  baseURL: 'http://localhost:3000',
+  timeout: 2000,
+  headers: {'Authorization': process.env.JR_JWT}
+});
 
   export default {
-    name: 'InventoryTable',
+    name: 'SendList',
     props: ['getSelectedItem'],
     data() {
       return {
         selectedItem: '',
         tableData: [{
-          id: 1,
-          added: '2016-05-03',
-          title: 'Tom',
-          address: 'Tank Engine Plt9 3/4',
-          count: 9,
-          tag: 'Home'
-        }, {
-          id: 2,
-          added: '2016-05-02',
-          title: 'Alice',
-          address: '109 Wonderland Ave',
-          count: 1,
-          tag: 'Office'
-        }, {
-          id: 3,
-          added: '2016-05-04',
-          title: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-          count: 4,
-          tag: 'Home'
-        }, {
-          id: 4,
-          added: '2016-05-01',
-          title: 'Peter',
-          address: 'No. 189, Grove St, Los Angeles',
-          count: 14,
-          tag: 'Office'
+          title: "Test title",
+          count: 5
         }],
       }
+    },
+    created: function() {
+      console.log("Created");
+      instance.get('/codes/unique')
+        .then((res) => {
+          console.log(res.data);
+          console.log(this.tableData);
+          this.tableData = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     methods: {
       // openSendPrompt() {

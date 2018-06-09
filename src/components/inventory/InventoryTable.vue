@@ -3,16 +3,50 @@
     <el-table
     :data="tableData"
     offset="2"
-    @row-click=showSendOtions>
+    @row-click=selectItem>
     <el-table-column
       sortable
       prop="title"
       label="Title">
     </el-table-column>
     <el-table-column
-      prop="count"
-      label="Count"
-      width="100"
+      class="hidden-lg-and-down"
+      type="hidden-lg-and-down"
+      hidden-lg-and-down
+      prop="description"
+      label="Description"
+      sortable
+      width="180"
+    >
+    </el-table-column>
+    <el-table-column
+      class="hidden-lg-and-down"
+      type="hidden-lg-and-down"
+      hidden-lg-and-down
+      prop="unique"
+      label="Unique"
+      sortable
+      width="180"
+    >
+    </el-table-column>
+    <el-table-column
+      class="hidden-lg-and-down"
+      type="hidden-lg-and-down"
+      hidden-lg-and-down
+      prop="expiration"
+      label="Expiration"
+      sortable
+      width="180"
+    >
+    </el-table-column>
+    <el-table-column
+      class="hidden-lg-and-down"
+      type="hidden-lg-and-down"
+      hidden-lg-and-down
+      prop="filename"
+      label="File"
+      sortable
+      width="180"
     >
     </el-table-column>
     <el-table-column
@@ -21,6 +55,36 @@
       hidden-lg-and-down
       prop="added"
       label="Added"
+      sortable
+      width="180"
+    >
+    </el-table-column>
+    <el-table-column
+      class="hidden-lg-and-down"
+      type="hidden-lg-and-down"
+      hidden-lg-and-down
+      prop="status"
+      label="Status"
+      sortable
+      width="180"
+    >
+    </el-table-column>
+    <el-table-column
+      class="hidden-lg-and-down"
+      type="hidden-lg-and-down"
+      hidden-lg-and-down
+      prop="sent"
+      label="Sent"
+      sortable
+      width="180"
+    >
+    </el-table-column>
+    <el-table-column
+      class="hidden-lg-and-down"
+      type="hidden-lg-and-down"
+      hidden-lg-and-down
+      prop="recepient"
+      label="Recepient"
       sortable
       width="180"
     >
@@ -38,6 +102,13 @@
 <script>
 import 'element-ui/lib/theme-chalk/display.css';
 import { MessageBox } from 'element-ui';
+import axios from 'axios';
+
+var instance = axios.create({
+  baseURL: 'http://localhost:3000',
+  timeout: 2000,
+  headers: {'Authorization': process.env.JR_JWT}
+});
 
   export default {
     name: 'InventoryTable',
@@ -76,6 +147,16 @@ import { MessageBox } from 'element-ui';
         }],
       }
     },
+    created: function() {
+      instance.get('/codes')
+        .then((res) => {
+          this.tableData = res.data;
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    },
     methods: {
       // openSendPrompt() {
       //   const h = this.$createElement;
@@ -89,6 +170,10 @@ import { MessageBox } from 'element-ui';
       // },
       showSendOtions(item) {
         this.selectedItem = item;
+        this.getSelectedItem(item);
+      },
+      selectItem(item) {
+        console.log(item);
         this.getSelectedItem(item);
       },
       formatter(row, column) {

@@ -37,6 +37,7 @@ export default {
         onSuccess: (result) => {
           console.log(result);
           this.getAuth(result.idToken.jwtToken);
+          console.log(result.idToken);
         },
         onFailure: function(err) {
           alert("Error!");
