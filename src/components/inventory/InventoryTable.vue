@@ -104,51 +104,26 @@ import 'element-ui/lib/theme-chalk/display.css';
 import { MessageBox } from 'element-ui';
 import axios from 'axios';
 
+console.log("creating axios");
 var instance = axios.create({
   baseURL: 'http://localhost:3000',
   timeout: 2000,
-  headers: {'Authorization': process.env.JR_JWT}
 });
 
   export default {
     name: 'InventoryTable',
-    props: ['getSelectedItem'],
+    props: ['getSelectedItem',
+            'authtoken'],
     data() {
       return {
         selectedItem: '',
-        tableData: [{
-          id: 1,
-          added: '2016-05-03',
-          title: 'Tom',
-          address: 'Tank Engine Plt9 3/4',
-          count: 9,
-          tag: 'Home'
-        }, {
-          id: 2,
-          added: '2016-05-02',
-          title: 'Alice',
-          address: '109 Wonderland Ave',
-          count: 1,
-          tag: 'Office'
-        }, {
-          id: 3,
-          added: '2016-05-04',
-          title: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-          count: 4,
-          tag: 'Home'
-        }, {
-          id: 4,
-          added: '2016-05-01',
-          title: 'Peter',
-          address: 'No. 189, Grove St, Los Angeles',
-          count: 14,
-          tag: 'Office'
-        }],
+        tableData: [],
       }
     },
     created: function() {
-      instance.get('/codes')
+      console.log(this.authtoken);
+      console.log('created');
+      instance.get('/codes', {headers: {Authorization: this.authtoken}})
         .then((res) => {
           this.tableData = res.data;
           console.log(res);

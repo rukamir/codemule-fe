@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Inventory</h2>
-    <InventoryTable v-if="selected == null" :getSelectedItem=setSelectedItem />
+    <InventoryTable v-if="selected == null" :getSelectedItem=setSelectedItem :authtoken="this.authtoken" />
     <InventoryDisplay v-else :voucher=selected :clearSelected=clearSelected />
   </div>
 </template>
@@ -13,7 +13,8 @@ import InventoryDisplay from './InventoryDisplay';
 
 export default {
   name: "Inventory",
-  props: ['getSelectedItem'],
+  props: ['getSelectedItem',
+          'authtoken'],
   components: {
     InventoryTable,
     InventoryDisplay,
@@ -23,9 +24,11 @@ export default {
       selected: null,
     };
   },
+  created: function() {
+    console.log(this.authtoken);
+  },
   methods: {
     setSelectedItem(item) {
-      console.log(`Got items to parent${item}`);
       this.selected = item;
     },
     clearSelected() {

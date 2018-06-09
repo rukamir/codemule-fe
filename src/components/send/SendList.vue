@@ -38,13 +38,13 @@ import axios from 'axios';
 
 var instance = axios.create({
   baseURL: 'http://localhost:3000',
-  timeout: 2000,
-  headers: {'Authorization': process.env.JR_JWT}
+  timeout: 2000
 });
 
   export default {
     name: 'SendList',
-    props: ['getSelectedItem'],
+    props: ['getSelectedItem',
+            'authtoken'],
     data() {
       return {
         selectedItem: '',
@@ -56,9 +56,9 @@ var instance = axios.create({
     },
     created: function() {
       console.log("Created");
-      instance.get('/codes/unique')
+      console.log(this.authtoken);
+      instance.get('/codes/unique', {headers: {Authorization: this.authtoken}})
         .then((res) => {
-          console.log(res.data);
           console.log(this.tableData);
           this.tableData = res.data;
         })

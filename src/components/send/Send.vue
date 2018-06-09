@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Send Compnent</h2>
-    <SendList :getSelectedItem=getSelectedItem />
+    <SendList :getSelectedItem=getSelectedItem :authtoken="this.authtoken" />
   </div>
 </template>
 
@@ -10,7 +10,8 @@ import SendList from './SendList';
 
 export default {
   name: "SendView",
-  props: ['getSelectedItem'],
+  props: ['getSelectedItem',
+          'authtoken'],
   components: {
     SendList,
   },

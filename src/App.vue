@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Nav :getPage=getPage></Nav>
-    <Send v-if="this.activePage == 'send'" :getSelectedItem=getSelectedItem />
-    <Inventory v-if="this.activePage == 'inventory'"/>
+    <Send v-if="this.activePage == 'send'" :authtoken="this.jwt" :getSelectedItem=getSelectedItem />
+    <Inventory v-if="this.activePage == 'inventory'" :authtoken="this.jwt" />
 
     <Login :getAuth=getAuth v-bind:loggedIn=isLoggedIn></Login>
   </div>
