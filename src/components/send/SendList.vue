@@ -55,8 +55,6 @@ var instance = axios.create({
       }
     },
     created: function() {
-      console.log("Created");
-      console.log(this.authtoken);
       instance.get('/codes/unique', {headers: {Authorization: this.authtoken}})
         .then((res) => {
           console.log(this.tableData);
