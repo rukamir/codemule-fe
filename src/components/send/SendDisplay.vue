@@ -2,9 +2,9 @@
   <div>
     <el-row>
       <el-col>
-        <el-form :inline="true" :model="receipent" class="demo-form-inline">
+        <el-form v-if="!this.sent" :model="recipient" :inline="true" class="demo-form-inline">
           <el-form-item label="Send to:">
-            <el-input v-model="this.receipent" placeholder="Approved by"></el-input>
+            <el-input v-model="recipient.address" placeholder="address"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="send">Send</el-button>
@@ -13,6 +13,9 @@
             <el-button type="danger" @click="cancel">Cancel</el-button>
           </el-form-item>
         </el-form>
+        <h2 v-if="this.error != null">Error sending <i class="el-icon-error" /></h2>
+        <h2 v-else-if="this.sent">Sent to {{ this.recipient.address }} <i class="el-icon-success" /> <el-button @click=this.cancel type="primary">Send Another</el-button></h2>
+
       </el-col>
       <el-col>
 
@@ -67,8 +70,10 @@ export default {
           'getSelectedItem'],
   data() {
     return {
-      receipent: null,
+      recipient: { address: "" },
       activeItem: null,
+      sent: false,
+      error: null,
     };
   },
   created: function() {
@@ -93,6 +98,8 @@ export default {
     },
     send() {
       console.log(`sending ${this.activeItem.title}`);
+      this.sent = true;
+      console.log(this.recipient);
     },
     cancel() {
       this.getSelectedItem(null);
