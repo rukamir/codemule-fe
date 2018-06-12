@@ -36,6 +36,11 @@
               :disabled="true">
             </el-input>
           </el-form-item>
+          <el-form-item label="Recipient">
+            <el-input
+              v-model="selected.recipient">
+            </el-input>
+          </el-form-item>
           <el-form-item label="Expiration">
             <el-input
               v-model="selected.experation">
