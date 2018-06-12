@@ -34,12 +34,7 @@
 <script>
 // import 'element-ui/lib/theme-chalk/display.css';
 import { MessageBox } from 'element-ui';
-import axios from 'axios';
-
-var instance = axios.create({
-  baseURL: 'http://localhost:3000',
-  timeout: 2000
-});
+import axios from '../../services/axios';
 
   export default {
     name: 'SendList',
@@ -55,7 +50,7 @@ var instance = axios.create({
       }
     },
     created: function() {
-      instance.get('/codes/unique', {headers: {Authorization: this.authtoken}})
+      axios.instance.get('/codes/unique', {headers: {Authorization: this.authtoken}})
         .then((res) => {
           console.log(this.tableData);
           this.tableData = res.data;

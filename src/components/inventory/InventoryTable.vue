@@ -102,13 +102,13 @@
 <script>
 import 'element-ui/lib/theme-chalk/display.css';
 import { MessageBox } from 'element-ui';
-import axios from 'axios';
+import axios from '../../services/axios';
 
-console.log("creating axios");
-var instance = axios.create({
-  baseURL: 'http://localhost:3000',
-  timeout: 2000,
-});
+// console.log("creating axios");
+// var instance = axios.create({
+//   baseURL: 'http://localhost:3000',
+//   timeout: 2000,
+// });
 
   export default {
     name: 'InventoryTable',
@@ -123,7 +123,7 @@ var instance = axios.create({
     created: function() {
       console.log(this.authtoken);
       console.log('created');
-      instance.get('/codes', {headers: {Authorization: this.authtoken}})
+      axios.instance.get('/codes', {headers: {Authorization: this.authtoken}})
         .then((res) => {
           this.tableData = res.data;
           console.log(res);

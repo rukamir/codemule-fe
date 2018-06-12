@@ -56,12 +56,7 @@
 
 
 <script>
-import axios from 'axios';
-
-var instance = axios.create({
-  baseURL: 'http://localhost:3000',
-  timeout: 2000
-});
+import axios from '../../services/axios';
 
 export default {
   name: "SendDisplay",
@@ -77,7 +72,7 @@ export default {
     };
   },
   created: function() {
-    instance.get(`/code/${this.title}/single`, {headers: {Authorization: this.authtoken}})
+    axios.instance.get(`/code/${this.title}/single`, {headers: {Authorization: this.authtoken}})
       .then((res) => {
         console.log(res.data);
         this.activeItem = res.data[0];

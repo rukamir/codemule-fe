@@ -64,13 +64,7 @@
 
 
 <script>
-import axios from 'axios';
-
-var instance = axios.create({
-  baseURL: 'http://localhost:3000',
-  timeout: 2000,
-  headers: {'Authorization': process.env.JR_JWT}
-});
+import axios from '../../services/axios';
 
 export default {
   name: "InventoryDisplay",
@@ -85,7 +79,7 @@ export default {
   created: function() {
     console.log(this.voucher);
     this.selected = this.voucher;
-    // instance.get(`/code/${this.voucher.id}/image`)
+    // axios.instance.get(`/code/${this.voucher.id}/image`)
     //   .then((res) => {
     //     //console.log(res.data);
     //     this.img = res.data;
