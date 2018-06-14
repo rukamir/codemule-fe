@@ -38,8 +38,7 @@ import axios from '../../services/axios';
 
   export default {
     name: 'SendList',
-    props: ['getSelectedItem',
-            'authtoken'],
+    props: ['getSelectedItem'],
     data() {
       return {
         selectedItem: '',
@@ -50,7 +49,8 @@ import axios from '../../services/axios';
       }
     },
     created: function() {
-      axios.instance.get('/codes/unique', {headers: {Authorization: this.authtoken}})
+      console.log('calling');
+      axios.get('/codes/unique')
         .then((res) => {
           console.log(this.tableData);
           this.tableData = res.data;

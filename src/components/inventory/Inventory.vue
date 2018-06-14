@@ -25,14 +25,12 @@ export default {
     };
   },
   created: function() {
-    console.log(this.authtoken);
   },
   methods: {
     setSelectedItem(item) {
       this.selected = item;
     },
     clearSelected() {
-      console.log('selected cleared');
       this.selected = null;
     }
   },

@@ -13,6 +13,7 @@ import Login from './components/Login';
 import Nav from './components/Nav';
 import Send from './components/send/Send';
 import Inventory from './components/inventory/Inventory';
+import axios from './services/axios';
 import 'element-ui/lib/theme-chalk/display.css';
 
 const ENDPOINT = process.env.VUE_APP_ENDPOINT;
@@ -35,6 +36,7 @@ export default {
   methods: {
     getAuth(token) {
       this.jwt = token;
+      axios.setAuthorizationHeader(token);
     },
     getSelectedItem(item) {
       console.log(item);

@@ -83,8 +83,8 @@
       class="hidden-lg-and-down"
       type="hidden-lg-and-down"
       hidden-lg-and-down
-      prop="recepient"
-      label="Recepient"
+      prop="recipient"
+      label="Recipient"
       sortable
       width="180"
     >
@@ -121,12 +121,9 @@ import axios from '../../services/axios';
       }
     },
     created: function() {
-      console.log(this.authtoken);
-      console.log('created');
       axios.instance.get('/codes', {headers: {Authorization: this.authtoken}})
         .then((res) => {
           this.tableData = res.data;
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -148,7 +145,6 @@ import axios from '../../services/axios';
         this.getSelectedItem(item);
       },
       selectItem(item) {
-        console.log(item);
         this.getSelectedItem(item);
       },
       formatter(row, column) {

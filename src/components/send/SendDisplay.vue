@@ -61,7 +61,6 @@ import axios from '../../services/axios';
 export default {
   name: "SendDisplay",
   props: ['title',
-          'authtoken',
           'getSelectedItem'],
   data() {
     return {
@@ -72,9 +71,8 @@ export default {
     };
   },
   created: function() {
-    axios.instance.get(`/code/${this.title}/single`, {headers: {Authorization: this.authtoken}})
+    axios.get(`/code/${this.title}/single`)
       .then((res) => {
-        console.log(res.data);
         this.activeItem = res.data[0];
       })
       .catch((err) => {
@@ -86,7 +84,7 @@ export default {
       return [
         { label: "Title", value: this.activeItem.title },
         { label: "Description", value: this.activeItem.description },
-        { label: "Expiration", value: this.activeItem.experation },
+        { label: "Expiration", value: this.activeItem.expiration },
         { label: "Unique", value: this.activeItem.unqiue ? "True": "False" },
         { label: "Filename", value: this.activeItem.filename },
       ];
@@ -94,7 +92,13 @@ export default {
     send() {
       console.log(`sending ${this.activeItem.title}`);
       this.sent = true;
-      console.log(this.recipient);
+      axios.put(`/send/${this.activeItem.id}`, { recipient: this.recipient.address })
+        .then((res) => {
+
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     cancel() {
       this.getSelectedItem(null);
