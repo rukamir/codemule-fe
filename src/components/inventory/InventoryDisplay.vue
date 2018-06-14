@@ -27,10 +27,16 @@
             </el-input>
           </el-form-item>
           <el-form-item label="Sent Date">
-            <el-input
-              v-model="selected.sent"
-              :disabled="true">
-            </el-input>
+            <div class="block">
+              <el-date-picker
+                @change=setStatusIfSent
+                v-model="selected.sent"
+                format="yyyy-MM-dd"
+                clearable
+                type="date"
+                placeholder="Pick a day">
+              </el-date-picker>
+            </div>
           </el-form-item>
           <el-form-item label="Status">
             <el-select v-model="selected.status" clearable placeholder="Select">
@@ -48,9 +54,16 @@
             </el-input>
           </el-form-item>
           <el-form-item label="Expiration">
-            <el-input
-              v-model="selected.expiration">
-            </el-input>
+            <div class="block">
+              <el-date-picker
+                @change=setStatusIfExpired
+                v-model="selected.expiration"
+                format="yyyy-MM-dd"
+                clearable
+                type="date"
+                placeholder="Pick a day">
+              </el-date-picker>
+            </div>
           </el-form-item>
           <el-form-item label="Added">
             <el-input
@@ -111,6 +124,14 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    setStatusIfSent() {
+      this.selected.status = this.selected.sent != null ? 'sent' : null;
+    },
+    setStatusIfExpired() {
+      this.selected.status = this.selected.expiration < new Date()
+        && this.selected.sent == null
+       ? 'expired' : this.selected.status;
     },
     // form validation needed
     //  - do not allow expiration data prior to today with any status other than expired
