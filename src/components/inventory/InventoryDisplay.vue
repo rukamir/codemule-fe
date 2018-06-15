@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div v-if="this.alert.error != null">
+      <el-alert
+        v-if="!this.alert.error"
+        :title="this.alert.message"
+        type="success" />
+      <el-alert
+        v-if="this.alert.error"
+        :title="this.alert.message"
+        type="error" />
+    </div>
     <el-row>
       <el-col 
             :xs="{span:16, offset:4}"
@@ -32,6 +42,7 @@
                 @change=setStatusIfSent
                 v-model="selected.sent"
                 format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 clearable
                 type="date"
                 placeholder="Pick a day">
@@ -59,6 +70,7 @@
                 @change=setStatusIfExpired
                 v-model="selected.expiration"
                 format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 clearable
                 type="date"
                 placeholder="Pick a day">
@@ -94,6 +106,10 @@ export default {
     return {
       selected: null,
       img: null,
+      alert: {
+        message: null,
+        error: null,
+      },
       options: {
         status: ['sent']
       },
@@ -119,10 +135,33 @@ export default {
     sendUpdated() {
       axios.put(`/code/${this.voucher.id}`, this.selected)
         .then((res) => {
-          console.log(res);
+          console.log(res.status);
+          switch (res.status) {
+            case 201:
+              this.alert = {
+                message: 'Voucher updated.',
+                error: false,
+              };
+              break;
+            case 400:
+              this.alert = {
+                message: 'Request could not be processed at this time.',
+                error: true,
+              };
+              break;
+            default:
+              this.alert = {
+                message: 'Something went wrong',
+                error: true,
+              };
+          };
         })
         .catch((err) => {
           console.log(err);
+          this.alert = {
+                message: 'Something went wrong',
+                error: true,
+              };
         });
     },
     setStatusIfSent() {
