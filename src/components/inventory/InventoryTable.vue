@@ -121,7 +121,7 @@ import axios from '../../services/axios';
       }
     },
     created: function() {
-      axios.instance.get('/codes', {headers: {Authorization: this.authtoken}})
+      axios.get('/codes')
         .then((res) => {
           this.tableData = res.data;
         })

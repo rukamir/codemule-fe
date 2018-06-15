@@ -36,8 +36,11 @@ export default {
       auth.userhandler = {
         onSuccess: (result) => {
           console.log(result);
-          this.getAuth(result.idToken.jwtToken);
-          console.log(result.idToken);
+          this.getAuth({
+            accessToken: result.accessToken.jwtToken,
+            idToken: result.idToken.jwtToken,
+            refreshToken: result.refreshToken.jwtToken,
+          });
         },
         onFailure: function(err) {
           alert("Error!");

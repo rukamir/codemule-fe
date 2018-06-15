@@ -34,9 +34,11 @@ export default {
     };
   },
   methods: {
-    getAuth(token) {
-      this.jwt = token;
-      axios.setAuthorizationHeader(token);
+    getAuth(auth) {
+      this.jwt = auth;
+      console.log(JSON.stringify(this.jwt));
+      axios.setAuthorizationHeader(this.jwt.accessToken);
+      axios.setIdHeader(this.jwt.idToken);
     },
     getSelectedItem(item) {
       console.log(item);
