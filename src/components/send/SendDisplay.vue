@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div v-if="this.alert.error != null">
+      <el-alert
+        v-if="!this.alert.error"
+        :title="this.alert.message"
+        type="success" />
+      <el-alert
+        v-if="this.alert.error"
+        :title="this.alert.message"
+        type="error" />`
+    </div>
     <el-row>
       <el-col>
         <el-form v-if="!this.sent" :model="recipient" :inline="true" class="demo-form-inline">
@@ -68,6 +78,10 @@ export default {
       activeItem: null,
       sent: false,
       error: null,
+      alert: {
+        error: null,
+        message: null,
+      },
     };
   },
   created: function() {
@@ -94,7 +108,25 @@ export default {
       this.sent = true;
       axios.put(`/send/${this.activeItem.id}`, { recipient: this.recipient.address })
         .then((res) => {
-
+          switch (res.status) {
+            case 204:
+              this.alert = {
+                error: false,
+                message: "Voucher is being sent.",
+              };
+              break;
+            case 400:
+              this.alert = {
+                error: true,
+                message: "This request could not be processed at this time.",
+              };
+              break;
+            default:
+              this.alert = {
+                error: true,
+                message: "Something went wrong",
+              };
+          };
         })
         .catch((err) => {
           console.log(err);
