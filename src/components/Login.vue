@@ -9,60 +9,50 @@
 <script>
 import { CognitoAuth } from 'amazon-cognito-auth-js';
 
+import cognito from '../services/cognito';
+
 const COGNITO_REDIRECT = process.env.VUE_APP_COGNITO_REDIRECT;
 const COGNITO_USERPOOL = process.env.VUE_APP_COGNITO_USERPOOL;
 const COGNITO_CLIENTID = process.env.VUE_APP_COGNITO_CLIENTID;
 const COGNITO_APP_DOMAIN = process.env.VUE_APP_COGNITO_APP_DOMAIN;
-
-var authData = {
-  ClientId : COGNITO_CLIENTID, // Your client id here
-  AppWebDomain : COGNITO_APP_DOMAIN,
-  TokenScopesArray : ['openid'], // e.g.['phone', 'email', 'profile','openid', 'aws.cognito.signin.user.admin'],
-  RedirectUriSignIn : COGNITO_REDIRECT,
-  RedirectUriSignOut : COGNITO_REDIRECT,
-  // IdentityProvider : '<TODO: add identity provider you want to specify>', // e.g. 'Facebook',
-  UserPoolId : COGNITO_USERPOOL, // Your user pool id here
-  AdvancedSecurityDataCollectionFlag : false, // e.g. true
-};
 
 export default {
     name: 'Login',
     props: ['getAuth',
             'loggedIn'],
     data() {
-      // debugger;
-      console.log("at data about to make auth");
-      var auth = new CognitoAuth(authData);
-      auth.userhandler = {
-        onSuccess: (result) => {
-          console.log(result);
-          this.getAuth({
-            accessToken: result.accessToken.jwtToken,
-            idToken: result.idToken.jwtToken,
-            refreshToken: result.refreshToken.jwtToken,
-          });
-        },
-        onFailure: function(err) {
-          alert("Error!");
-        }
-      };
       return {
-        auth,
       }
     },
     methods: {
       onSubmit() {
-        this.auth.getSession();
-        console.log('submit!');
+        cognito.login();
+        console.log('submit');
       },
       signOut() {
-        this.auth.signOut();
+        cognito.signout();
         console.log('signout');
       }
     },
-    mounted: function(){
-      var curUrl = window.location.href;
-      this.auth.parseCognitoWebResponse(curUrl);
+    created() {
+      console.log('created')
+      cognito.setSuccessAndFail(
+        (result) => {
+          console.log('setting auth', result);
+          this.getAuth({
+            accessToken: result.accessToken.jwtToken,
+            idToken: result.idToken.jwtToken,
+            refreshToken: result.refreshToken.refreshToken,
+          });
+        },
+        (err) => {
+          console.log('this was an error', err);
+        })
+    },
+    mounted() {
+        console.log('mounted!');
+        cognito.cognitoWebResponse();
+
     },
 };
 </script>
