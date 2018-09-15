@@ -20,14 +20,9 @@ module.exports = {
       title: 'Code Mule: Voucher Sending System',
     },
     console: {
-      // entry for the page
       entry: 'src/console/main.js',
-      // the source template
       template: 'src/console/index.html',
-      // output as dist/index.html
       filename: 'console/index.html',
-      // when using title option,
-      // template title tag needs to be <title><%= htmlWebpackPlugin.options.title %></title>
       title: 'Sending Console',
     },
   },
