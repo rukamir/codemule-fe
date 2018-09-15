@@ -3,12 +3,12 @@
     <NavBar :getPage=getPage />
     <Send v-if="this.activePage == 'send'" :authtoken="this.jwt" :getSelectedItem=getSelectedItem />
     <Inventory v-if="this.activePage == 'inventory'" :authtoken="this.jwt" />
-    <Login :getAuth=getAuth v-bind:loggedIn=isLoggedIn></Login>
+    <Logout :getAuth=getAuth v-bind:loggedIn=isLoggedIn />
   </div>
 </template>
 
 <script>
-import Login from './components/Login';
+import Logout from './components/Logout';
 import NavBar from './components/NavBar';
 import Send from './components/send/Send';
 import Inventory from './components/inventory/Inventory';
@@ -20,7 +20,7 @@ const ENDPOINT = process.env.VUE_APP_ENDPOINT;
 export default {
   name: 'app',
   components: {
-    Login,
+    Logout,
     NavBar,
     Send,
     Inventory
@@ -28,14 +28,13 @@ export default {
   data() {
     return {
       ENDPOINT,
-      activePage: 'send',
+      activePage: 'upload',
       jwt: '',
     };
   },
   methods: {
     getAuth(auth) {
       this.jwt = auth;
-      console.log(JSON.stringify(this.jwt));
       axios.setAuthorizationHeader(this.jwt.accessToken);
       axios.setIdHeader(this.jwt.idToken);
     },
@@ -62,7 +61,8 @@ export default {
         console.log("promise good", res);
       })
       .catch((err) => {
-        location.replace('/');
+        // location.replace('/');
+        console.log(err);
       });
     console.log('temp', temp);
   },

@@ -8,7 +8,6 @@
 
 <script>
 import { CognitoAuth } from 'amazon-cognito-auth-js';
-
 import cognito from '../services/cognito';
 
 const COGNITO_REDIRECT = process.env.VUE_APP_COGNITO_REDIRECT;
@@ -50,9 +49,8 @@ export default {
         })
     },
     mounted() {
-        console.log('mounted!');
-        cognito.cognitoWebResponse();
-
+        // console.log('mounted!');
+        // cognito.cognitoWebResponse();
     },
 };
 </script>

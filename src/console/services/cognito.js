@@ -36,15 +36,13 @@ export default {
 
   login() {
     this.auth.getSession();
-    console.log('submit!');
   },
   cognitoWebResponse() {
     const curUrl = window.location.href;
-    console.log(this.auth.parseCognitoWebResponse(curUrl));
+    this.auth.parseCognitoWebResponse(curUrl);
   },
   signout() {
     this.auth.signOut();
-    console.log('signout');
   },
   refreshToken(token) {
     console.log(this.cognitoISP);
