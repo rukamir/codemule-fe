@@ -1,16 +1,15 @@
 <template>
   <div id="app">
-    <Nav :getPage=getPage></Nav>
+    <NavBar :getPage=getPage />
     <Send v-if="this.activePage == 'send'" :authtoken="this.jwt" :getSelectedItem=getSelectedItem />
     <Inventory v-if="this.activePage == 'inventory'" :authtoken="this.jwt" />
-
     <Login :getAuth=getAuth v-bind:loggedIn=isLoggedIn></Login>
   </div>
 </template>
 
 <script>
 import Login from './components/Login';
-import Nav from './components/Nav';
+import NavBar from './components/NavBar';
 import Send from './components/send/Send';
 import Inventory from './components/inventory/Inventory';
 import axios from './services/axios';
@@ -22,7 +21,7 @@ export default {
   name: 'app',
   components: {
     Login,
-    Nav,
+    NavBar,
     Send,
     Inventory
   },
