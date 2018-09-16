@@ -55,17 +55,6 @@ export default {
       this.activePage = pages[pageIndex];
     },
   },
-  created() {
-    var temp = axios.get('/authedup')
-      .then((res) => {
-        console.log("promise good", res);
-      })
-      .catch((err) => {
-        // location.replace('/');
-        console.log(err);
-      });
-    console.log('temp', temp);
-  },
   computed: {
     isLoggedIn() {
       return this.jwt != '';

@@ -10,17 +10,13 @@
         :title="this.alert.message"
         type="error" />
     </div>
-    <el-row>
-      <el-col 
-            :xs="{span:16, offset:4}"
-            :sm="{span:16, offset:4}" 
-            :md="{span:16, offset:4}">
-            <el-button
-            v-on:click=this.clearSelected type="" plain>Cancel</el-button>
-            <el-button
-            v-on:click=this.sendUpdated type="success" plain>Save</el-button>
+    <div>
+      <div>
+        <el-button
+          v-on:click=this.clearSelected type="" plain>Cancel</el-button>
+        <el-button
+          v-on:click=this.sendUpdated type="success" plain>Save</el-button>
         <h2>Display{{ this.selected.voucherId }}</h2>
-        <!-- <span v-if="this.voucher.filename" ref="putImageHere"></span> -->
         <el-form ref="selected" :model="this.selected" label-width="120px">
           <el-form-item label="Title">
             <el-input v-model="selected.title"></el-input>
@@ -89,8 +85,8 @@
             </el-input>
           </el-form-item>
         </el-form>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
   </div>
 </template>
 
