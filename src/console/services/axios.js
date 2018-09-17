@@ -40,4 +40,16 @@ export default {
       },
     );
   },
+  post(uri, body) {
+    return instance.post(
+      uri,
+      body,
+      {
+        headers: {
+          Authorization: authToken,
+          identity: idToken,
+        },
+      },
+    );
+  },
 };

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <NavBar :getPage=getPage />
+    <Upload v-if="this.activePage == 'upload'" />
     <Send v-if="this.activePage == 'send'" :authtoken="this.jwt" :getSelectedItem=getSelectedItem />
     <Inventory v-if="this.activePage == 'inventory'" :authtoken="this.jwt" />
     <Logout :getAuth=getAuth v-bind:loggedIn=isLoggedIn />
@@ -12,6 +13,7 @@ import Logout from './components/Logout';
 import NavBar from './components/NavBar';
 import Send from './components/send/Send';
 import Inventory from './components/inventory/Inventory';
+import Upload from './components/upload/Upload';
 import axios from './services/axios';
 import 'element-ui/lib/theme-chalk/display.css';
 
@@ -22,6 +24,7 @@ export default {
   components: {
     Logout,
     NavBar,
+    Upload,
     Send,
     Inventory
   },
