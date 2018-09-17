@@ -2,15 +2,14 @@
   <div>
     <el-form ref="voucher" :model="voucher" label-width="120px">
       <el-form-item label="Title">
-        <el-input v-model="voucher.title"></el-input>
+        <el-autocomplete
+          class="inline-input"
+          v-model="voucher.title"
+          :fetch-suggestions="querySearch"
+          placeholder="Please Input"
+          :trigger-on-focus="false"
+        />
       </el-form-item>
-      <el-autocomplete
-        class="inline-input"
-        v-model="voucher.title"
-        :fetch-suggestions="querySearch"
-        placeholder="Please Input"
-        :trigger-on-focus="false"
-      />
       <el-form-item label="Code">
         <el-input v-model="voucher.code"></el-input>
       </el-form-item>
@@ -58,6 +57,9 @@
 </template>
 
 <style>
+  .el-autocomplete {
+    width: 100%;
+  }
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;

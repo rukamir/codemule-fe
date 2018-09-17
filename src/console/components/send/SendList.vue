@@ -28,6 +28,14 @@
         </el-table>
       </el-col>
     </el-row>
+    <el-pagination
+      layout="prev, pager, next, sizes"
+      @current-change="getPageData"
+      @size-change="handleSizeChange"
+      :current-page.sync="page"
+      :page-sizes="[1, 2, 3]"
+      :total="totalCount"
+    />
   </div>
 </template>
 
@@ -42,14 +50,23 @@ import axios from '../../services/axios';
     data() {
       return {
         selectedItem: '',
-        tableData: [{
-          title: "Test title",
-          count: 5
-        }],
+        tableSize: 10,
+        totalCount: 0,
+        page: 1,
+        tableData: [],
       }
     },
     created: function() {
       console.log('calling');
+      axios.get('/codes/unique/count')
+        .then((res) => {
+          console.log('unqiue total count', res);
+          this.totalCount = res.data[0].total;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
       axios.get('/codes/unique')
         .then((res) => {
           console.log(this.tableData);
@@ -86,6 +103,20 @@ import axios from '../../services/axios';
       },
       getWindowWidth() {
         return window.innerWidth
+      },
+      handleSizeChange(val) {
+        this.tableSize = val;
+      },
+      getPageData() {
+        console.log('data will be calleds', this.page);
+        axios.get(`/codes/unique?page=${this.page}&count=${this.tableSize}`)
+          .then((res) => {
+            console.log(this.tableData);
+            this.tableData = res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       },
     }
   }
