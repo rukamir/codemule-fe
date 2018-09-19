@@ -96,6 +96,14 @@
       width="150">
     </el-table-column>
   </el-table>
+  <el-pagination
+    layout="prev, pager, next, sizes"
+    @current-change="getPageData"
+    @size-change="handleSizeChange"
+    :current-page.sync="page"
+    :page-sizes="[5, 10, 20]"
+    :total="totalCount"
+  />
   </div>
 </template>
 
@@ -104,12 +112,6 @@ import 'element-ui/lib/theme-chalk/display.css';
 import { MessageBox } from 'element-ui';
 import axios from '../../services/axios';
 
-// console.log("creating axios");
-// var instance = axios.create({
-//   baseURL: 'http://localhost:3000',
-//   timeout: 2000,
-// });
-
   export default {
     name: 'InventoryTable',
     props: ['getSelectedItem',
@@ -117,29 +119,36 @@ import axios from '../../services/axios';
     data() {
       return {
         selectedItem: '',
+        tableSize: 1,
+        totalCount: 0,
+        page: 1,
         tableData: [],
       }
     },
-    created: function() {
-      axios.get('/codes')
-        .then((res) => {
-          this.tableData = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+    created() {
+      axios.get('/codes/count')
+          .then((res) => {
+            this.totalCount = res.data[0].total;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      this.getPageData();
     },
     methods: {
-      // openSendPrompt() {
-      //   const h = this.$createElement;
-      //   this.$msgbox({
-      //     title: "Send",
-      //     message: "he;;p",
-      //     showCancelButton: true,
-      //     confirmButtonText: 'OK',
-      //     cancelButtonText: 'Cancel',
-      //   }).then(console.log);
-      // },
+      getPageData() {
+        axios.get(`/codes?page=${this.page}&count=${this.tableSize}`)
+          .then((res) => {
+            this.tableData = res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      },
+      handleSizeChange(val) {
+        this.tableSize = val;
+        this.getPageData();
+      },
       showSendOtions(item) {
         this.selectedItem = item;
         this.getSelectedItem(item);

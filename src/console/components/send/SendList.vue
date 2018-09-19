@@ -50,7 +50,7 @@ import axios from '../../services/axios';
     data() {
       return {
         selectedItem: '',
-        tableSize: 10,
+        tableSize: 1,
         totalCount: 0,
         page: 1,
         tableData: [],
@@ -67,14 +67,7 @@ import axios from '../../services/axios';
           console.log(err);
         });
 
-      axios.get('/codes/unique')
-        .then((res) => {
-          console.log(this.tableData);
-          this.tableData = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        this.getPageData();
     },
     methods: {
       // openSendPrompt() {
@@ -106,9 +99,9 @@ import axios from '../../services/axios';
       },
       handleSizeChange(val) {
         this.tableSize = val;
+        this.getPageData();
       },
       getPageData() {
-        console.log('data will be calleds', this.page);
         axios.get(`/codes/unique?page=${this.page}&count=${this.tableSize}`)
           .then((res) => {
             console.log(this.tableData);
